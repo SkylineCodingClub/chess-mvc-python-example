@@ -1,11 +1,18 @@
 import pygame
-from pygame.locals import *
-from renderer import Renderer
+HAS_PYGAME = True
+try:
+    from pygame.locals import *
+    from renderer import Renderer
+except ImportError:
+    HAS_PYGAME = False
 
 SQUARE_SIZE = 75
 
 class DesktopRenderer(Renderer):
     def __init__(self, rows):
+        if(not HAS_PYGAME):
+            print "Cannot use desktop renderer without pygame"
+            raise ImportError("Missing dependency pygame")
         pygame.init()
         self.fpsClock = pygame.time.Clock()
         self.windowSurfaceObj = pygame.display.set_mode(
