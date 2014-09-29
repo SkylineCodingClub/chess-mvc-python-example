@@ -1,8 +1,8 @@
-import pygame
+from renderer import Renderer
 HAS_PYGAME = True
 try:
+    import pygame
     from pygame.locals import *
-    from renderer import Renderer
 except ImportError:
     HAS_PYGAME = False
 
