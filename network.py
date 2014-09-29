@@ -4,7 +4,7 @@ import json
 
 class SocketMover:
     def __init__(self):
-        HOST = ''
+        HOST = socket.gethostname()
         PORT = 5000
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)

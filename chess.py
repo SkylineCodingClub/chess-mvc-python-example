@@ -6,6 +6,7 @@ import desktop
 import console
 import ai
 import network
+import web
 
 COLORS = ['white', 'black']
 THRESHOLD = 500000
@@ -283,11 +284,13 @@ def init_game():
             renderer = desktop.DesktopRenderer(len(board))
         elif(render_arg == "console"):
             renderer = console.ConsoleRenderer()
+        elif(render_arg == "web"):
+            renderer = web.WebRenderer()
         else:
             print "Renderer {0} not available".format(render_arg)
             exit()
     else:
-        renderer = console.ConsoleRenderer()
+        renderer = web.WebRenderer()
 
     if(len(sys.argv) > 2):
         mover_arg = sys.argv[2]
@@ -300,7 +303,7 @@ def init_game():
             exit()
     else:
         mover = ai.RandomMover()
-    
+
     play_game(renderer, board, mover)
 
 init_game()

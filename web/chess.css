@@ -1,0 +1,54 @@
+.square {
+    position: relative;
+    display: inline-block;
+    width: 75px;
+    height: 75px;
+}
+
+.square.light {
+    background-color: rgb(200, 200, 000) 
+}
+
+.square.dark {
+    background-color: rgb(100, 100, 100) 
+}
+
+.black.r {
+    background-image: url("../images/r.png")
+}
+
+.white.R {
+    background-image: url("../images/R.png")
+}
+
+.black.p {
+    background-image: url("../images/p.png")
+}
+
+.white.P {
+    background-image: url("../images/P.png")
+}
+
+.black.q {
+    background-image: url("../images/q.png")
+}
+
+.white.Q {
+    background-image: url("../images/Q.png")
+}
+
+.black.n {
+    background-image: url("../images/n.png")
+}
+
+.white.N {
+    background-image: url("../images/N.png")
+}
+
+.black.k {
+    background-image: url("../images/k.png")
+}
+
+.white.K {
+    background-image: url("../images/K.png")
+}
