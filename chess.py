@@ -295,7 +295,7 @@ def init_game():
     if(len(sys.argv) > 2):
         mover_arg = sys.argv[2]
         if(mover_arg == "socket"):
-            mover = network.NetworkMover()
+            mover = network.SocketMover()
         elif(mover_arg == "random"):
             mover = ai.RandomMover()
         else:
