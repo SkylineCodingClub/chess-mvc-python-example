@@ -1,22 +1,22 @@
 #!/usr/bin/python
 import copy
-import random
 import sys
 import os
 import time
 import desktop
 import console
+import ai
 
 COLORS = ['white', 'black']
 THRESHOLD = 500000
 
 
-def play_game(renderer, board):
+def play_game(renderer, board, mover):
     moves = 0
     tries = 0
     turn_color = COLORS[moves % 2]
     while(1):
-        next_move = get_next_move(color, board)
+        next_move = mover.get_next_move(color, board)
         # kind of a hack for the random ai
         if(tries > THRESHOLD):
             print "{0} loses".format(turn_color)
@@ -44,15 +44,6 @@ def is_draw(board):
                 draw = False
 
     return draw
-
-
-# "AI" function
-def get_next_move(color, board):
-    board_size = len(board) - 1
-    return [
-        [random.randint(0, board_size), random.randint(0, board_size)],
-        [random.randint(0, board_size), random.randint(0, board_size)],
-    ]
 
 
 def try_move(turn_color, board, from_row, from_col, to_row, to_col):
@@ -293,9 +284,11 @@ def init_game():
             renderer = console.ConsoleRenderer()
         else:
             print "Renderer {0} not available".format(arg)
+            exit()
     else:
         renderer = console.ConsoleRenderer()
 
-    play_game(renderer, board)
+    mover = ai.RandomMover()
+    play_game(renderer, board, mover)
 
 init_game()
