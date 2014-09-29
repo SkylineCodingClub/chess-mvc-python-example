@@ -5,36 +5,26 @@ import sys
 import os
 import time
 import desktop
+import console
 
 COLORS = ['white', 'black']
 THRESHOLD = 500000
 
 
-def play_game(renderer):
-    board = [['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'],
-             ['p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'],
-             ['',  '',  '',  '',  '',  '',  '',  ''],
-             ['',  '',  '',  '',  '',  '',  '',  ''],
-             ['',  '',  '',  '',  '',  '',  '',  ''],
-             ['',  '',  '',  '',  '',  '',  '',  ''],
-             ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
-             ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R']]
-
+def play_game(renderer, board):
     moves = 0
     tries = 0
     turn_color = COLORS[moves % 2]
     while(1):
         next_move = get_next_move(color, board)
+        # kind of a hack for the random ai
         if(tries > THRESHOLD):
             print "{0} loses".format(turn_color)
             break
         if(try_move(turn_color, board, next_move[0][0], next_move[0][1],
                     next_move[1][0], next_move[1][1])):
             moves += 1
-            if(renderer == "console"):
-                print_board(board)
-            elif(renderer == "desktop"):
-                desktop.draw_board(board)
+            renderer.draw(board)
             time.sleep(0.1)
             turn_color = COLORS[moves % 2]
             tries = 0
@@ -54,20 +44,6 @@ def is_draw(board):
                 draw = False
 
     return draw
-
-
-def print_board(board):
-    os.system('clear')
-    print '---------'
-    for row in range(len(board)):
-        for col in range(len(board[0])):
-            if(board[row][col] == ''):
-                sys.stdout.write(' ')
-            else:
-                sys.stdout.write(board[row][col])
-        sys.stdout.flush()
-        print '|'
-    print '---------'
 
 
 # "AI" function
@@ -299,10 +275,27 @@ def can_pawn_move(board, from_row, from_col, to_row, to_col):
 
 
 def init_game():
+
+    board = [['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'],
+             ['p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'],
+             ['',  '',  '',  '',  '',  '',  '',  ''],
+             ['',  '',  '',  '',  '',  '',  '',  ''],
+             ['',  '',  '',  '',  '',  '',  '',  ''],
+             ['',  '',  '',  '',  '',  '',  '',  ''],
+             ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
+             ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R']]
+
     if(len(sys.argv) > 1):
-        renderer = sys.argv[1]
+        arg = sys.argv[1]
+        if(arg == "desktop"):
+            renderer = desktop.DesktopRenderer(len(board))
+        elif(arg == "console"):
+            renderer = console.ConsoleRenderer()
+        else:
+            print "Renderer {0} not available".format(arg)
     else:
-        renderer = "console"
-    play_game(renderer)
+        renderer = console.ConsoleRenderer()
+
+    play_game(renderer, board)
 
 init_game()
