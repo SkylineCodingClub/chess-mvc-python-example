@@ -1,9 +1,10 @@
 import pygame
 from pygame.locals import *
+from renderer import Renderer
 
 SQUARE_SIZE = 75
 
-class DesktopRenderer:
+class DesktopRenderer(Renderer):
     def __init__(self, rows):
         pygame.init()
         self.fpsClock = pygame.time.Clock()
