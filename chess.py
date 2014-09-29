@@ -1,11 +1,11 @@
 #!/usr/bin/python
 import copy
 import sys
-import os
 import time
 import desktop
 import console
 import ai
+import network
 
 COLORS = ['white', 'black']
 THRESHOLD = 500000
@@ -15,6 +15,7 @@ def play_game(renderer, board, mover):
     moves = 0
     tries = 0
     turn_color = COLORS[moves % 2]
+    renderer.draw(board)
     while(1):
         next_move = mover.get_next_move(color, board)
         # kind of a hack for the random ai
@@ -277,18 +278,29 @@ def init_game():
              ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R']]
 
     if(len(sys.argv) > 1):
-        arg = sys.argv[1]
-        if(arg == "desktop"):
+        render_arg = sys.argv[1]
+        if(render_arg == "desktop"):
             renderer = desktop.DesktopRenderer(len(board))
-        elif(arg == "console"):
+        elif(render_arg == "console"):
             renderer = console.ConsoleRenderer()
         else:
-            print "Renderer {0} not available".format(arg)
+            print "Renderer {0} not available".format(render_arg)
             exit()
     else:
         renderer = console.ConsoleRenderer()
 
-    mover = ai.RandomMover()
+    if(len(sys.argv) > 2):
+        mover_arg = sys.argv[2]
+        if(mover_arg == "socket"):
+            mover = network.NetworkMover()
+        elif(mover_arg == "random"):
+            mover = ai.RandomMover()
+        else:
+            print "Renderer {0} not available".format(mover_arg)
+            exit()
+    else:
+        mover = ai.RandomMover()
+    
     play_game(renderer, board, mover)
 
 init_game()
