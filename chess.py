@@ -306,9 +306,10 @@ def init_game():
 
     play_game(renderer, board, mover)
 
-while True:
-    init_game()
-    print "(r)estart or (q)uit? "
-    c = sys.stdin.read(1)
-    if(c == "q"):
-        break
+if __name__ == '__main__':
+    while True:
+        init_game()
+        print "(r)estart or (q)uit? "
+        c = sys.stdin.read(1)
+        if(c == "q"):
+            break
